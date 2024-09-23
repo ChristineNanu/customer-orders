@@ -27,7 +27,7 @@ The app is accessible at http://localhost:8000/. The API docs are hosted at http
 ## Useful Commands
 
 - To run migrations:
-  ```
+  ``` 
   docker exec -i customer_orders_web python manage.py makemigrations
   ```
 - To apply migrations:
