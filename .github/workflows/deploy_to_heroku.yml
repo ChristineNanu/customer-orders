@@ -1,0 +1,35 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "Logging into Heroku..."
+          heroku auth:token
+      - name: Log in to Heroku Container Registry
+        run: |
+          echo "Logging into Heroku Container Registry..."
+          heroku container:login
+
+      - name: Build and Push Docker Image
+        run: |
+          echo "Building and pushing Docker image..."
+          heroku container:push web --app customer-orders
+
+      - name: Release Docker Image
+        run: |
+          echo "Releasing Docker image..."
+          heroku container:release web --app customer-orders
