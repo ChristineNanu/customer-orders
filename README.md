@@ -15,6 +15,7 @@ Manage customers and orders via a REST API.
   ```
 - Build and start the container:
   ```
+  
   docker compose up --build
   ```
 - Subsequent runs of the machine require only:
