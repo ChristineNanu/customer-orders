@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean
+name: Deploy to Heroku
 
 on:
   push:
@@ -7,23 +7,17 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
-
-      - name: Deploy to DigitalOcean
+      - name: Log in to Heroku
         run: |
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.DO_DROPLET_IP }} << 'EOF'
-            set -e  # Exit immediately if a command exits with a non-zero status
-            cd /opt/customer-orders/
-            git pull origin main
-            docker-compose down
-            docker-compose up -d --build
-          EOF
+          echo ${{ secrets.HEROKU_API_KEY }} | docker login --username=$HEROKU_EMAIL --password-stdin registry.heroku.com
+
+      - name: Deploy to Heroku
+        run: |
+          heroku git:remote -a $HEROKU_APP_NAME
+          git push heroku main
