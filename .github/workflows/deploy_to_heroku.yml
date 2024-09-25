@@ -22,9 +22,11 @@ jobs:
           source ~/.bashrc
           heroku auth:token
       - name: Log in to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           echo "Logging into Heroku Container Registry..."
-          heroku container:login
+          echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
 
       - name: Build and Push Docker Image
         run: |
