@@ -17,11 +17,14 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          echo "Logging into Heroku..."
+          curl https://cli-assets.heroku.com/install.sh | sh
+          echo "HEROKU_API_KEY=${HEROKU_API_KEY}" >> ~/.bashrc
+          source ~/.bashrc
           heroku auth:token
       - name: Log in to Heroku Container Registry
         run: |
-          echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+          echo "Logging into Heroku Container Registry..."
+          heroku container:login
 
       - name: Build and Push Docker Image
         run: |
