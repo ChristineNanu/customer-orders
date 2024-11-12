@@ -15,6 +15,7 @@ Manage customers and orders via a REST API.
   ```
 - Build and start the container:
   ```
+  
   docker compose up --build
   ```
 - Subsequent runs of the machine require only:
@@ -27,7 +28,7 @@ The app is accessible at http://localhost:8000/. The API docs are hosted at http
 ## Useful Commands
 
 - To run migrations:
-  ```
+  ``` 
   docker exec -i customer_orders_web python manage.py makemigrations
   ```
 - To apply migrations:
