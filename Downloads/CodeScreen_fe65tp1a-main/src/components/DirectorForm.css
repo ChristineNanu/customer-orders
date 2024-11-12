@@ -1,0 +1,11 @@
+.director-name-input-box{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.director-name-input-box input{
+    width: 300px;;
+    padding:8px ;
+    font-size: 16px;
+    border-radius: 4px;
+}
